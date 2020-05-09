@@ -1,12 +1,23 @@
-# CPPND: Capstone Snake Game Example
+# CPPND: Capstone Snake Game Extension
 
-This is a starter repo for the Capstone project in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213). The code for this repo was inspired by [this](https://codereview.stackexchange.com/questions/212296/snake-game-in-c-with-sdl) excellent StackOverflow post and set of responses.
+In this Capstone Project, I decided to extend the Snake Game project with some additional features, like adding Reward/Punishment mechanisms to the game. When the snake hits a coin then he can get extra points, when it catches a crown, the snake will slow down for a minute to make it easier to navigate through the field and catch points, and there will be more breadcrumbs adding to the fields. When it hits a Punishment icon, it speeds up for 30 seconds and there will be some bombs adding to the fields, if it hits the bomb then the game ends.
 
+This final project takes the starter repo from [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213), which was inspired by [this](https://codereview.stackexchange.com/questions/212296/snake-game-in-c-with-sdl) excellent StackOverflow post and set of responses.
+
+The original starter snake game looks like below:
 <img src="snake_game.gif"/>
 
-The Capstone Project gives you a chance to integrate what you've learned throughout this program. This project will become an important part of your portfolio to share with current and future colleagues and employers.
+After the extension, it looks like something below:
 
-In this project, you can build your own C++ application or extend this Snake game, following the principles you have learned throughout this Nanodegree Program. This project will demonstrate that you can independently create applications using a wide range of C++ features.
+
+## Rubrics covered in this final project
+1.
+2.
+3.
+4.
+5.
+
+
 
 ## Dependencies for Running Locally
 * cmake >= 3.7
