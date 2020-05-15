@@ -4,8 +4,12 @@
 
 Game::Game(std::size_t grid_width, std::size_t grid_height)
     : snake(grid_width, grid_height),
-      food(grid_width, grid_height) {
+      food(grid_width, grid_height),
+      bomb(grid_width, grid_height){
   PlaceFood();
+  bomb.setBombPos(-1,-1);
+  bomb.simulate();
+
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
@@ -23,7 +27,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, snake);
     Update();
-    renderer.Render(snake, food.pos);
+    renderer.Render(snake, food.pos, bomb.pos);
 
     frame_end = SDL_GetTicks();
 
@@ -61,6 +65,19 @@ void Game::PlaceFood() {
   }
 }
 
+void Game::PlaceBomb() {
+  bomb.updatePos();
+  while (true) {
+    // Check that the location is not occupied by a snake item before placing
+    // bomb.
+    if (snake.SnakeCell(bomb.pos.x, bomb.pos.y)) {
+      bomb.updatePos();
+    } else {
+      return;
+    }
+  }
+}
+
 void Game::Update() {
   if (!snake.alive) return;
 
@@ -75,7 +92,27 @@ void Game::Update() {
     PlaceFood();
     // Grow snake and increase speed.
     snake.GrowBody();
-    snake.speed += 0.01;
+    // snake.speed += 0.01;
+  }
+
+  if ((score > scoreTriggerBomb) && (!isThereBomb)){
+    std::cout<<"PLACED A BOMB!!!"<<std::endl;
+    // bomb.updatePos();
+    PlaceBomb();
+    isThereBomb = true;
+    scoreTriggerBomb += 5; //place new bomb every 5 points
+    std::cout<<"Bomb Pos:"<<bomb.pos.x<<", "<<bomb.pos.y<<std::endl;
+  }
+
+  if (isThereBomb) {
+    std::cout<<"Bomb Screen time left: "<<bomb.getTimeLeft()<<std::endl;
+    // isThereBomb = (bomb.getTimeLeft() > 0 ? true : false);
+    if (bomb.getTimeLeft() > 0){
+      isThereBomb = true;
+    } else {
+      isThereBomb = false;
+      bomb.setBombPos(-1,-1);
+    }
   }
 }
 

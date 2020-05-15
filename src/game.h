@@ -7,6 +7,7 @@
 #include "renderer.h"
 #include "snake.h"
 #include "ScreenFood.h"
+#include "ScreenBomb.h"
 
 class Game {
  public:
@@ -19,6 +20,7 @@ class Game {
  private:
   Snake snake;
   ScreenFood food;
+  ScreenBomb bomb;
   // SDL_Point food;
   //
   // std::random_device dev;
@@ -27,8 +29,11 @@ class Game {
   // std::uniform_int_distribution<int> random_h;
 
   int score{0};
-
+  int scoreTriggerBomb{3};
+  bool isThereBomb{false};
+  // std::size_t _gridWidth, _gridHeight;
   void PlaceFood();
+  void PlaceBomb();
   void Update();
 };
 
