@@ -96,6 +96,14 @@ void Game::Update() {
     // snake.speed += 0.01;
   }
 
+  if (isThereBomb) {
+    std::cout<<"Bomb Screen time left: "<<bomb.getTimeLeft()<<std::endl;
+    isThereBomb = (bomb.getTimeLeft() > 0 ? true : false);
+    if (bomb.pos.x == new_x && bomb.pos.y == new_y) {
+      snake.alive = false;
+    }
+  }
+
   if ((score > scoreTriggerBomb) && (!isThereBomb)){
     std::cout<<"PLACED A BOMB!!!"<<std::endl;
     // bomb.updatePos();
@@ -105,16 +113,7 @@ void Game::Update() {
     std::cout<<"Bomb Pos:"<<bomb.pos.x<<", "<<bomb.pos.y<<std::endl;
   }
 
-  if (isThereBomb) {
-    std::cout<<"Bomb Screen time left: "<<bomb.getTimeLeft()<<std::endl;
-    isThereBomb = (bomb.getTimeLeft() > 0 ? true : false);
-    // if (bomb.getTimeLeft() > 0){
-    //   isThereBomb = true;
-    // } else {
-    //   isThereBomb = false;
-    //   bomb.setBombPos(-1,-1);
-    // }
-  }
+
 }
 
 int Game::GetScore() const { return score; }
