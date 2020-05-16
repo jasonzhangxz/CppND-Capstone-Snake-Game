@@ -1,6 +1,6 @@
 # CPPND: Capstone Snake Game Extension
 
-In this Capstone Project, I decided to extend the Snake Game project with some additional features, like adding Reward/Punishment mechanisms to the game. When the snake hits a coin then he can get extra points, when it catches a crown, the snake will slow down for a minute to make it easier to navigate through the field and catch points, and there will be more breadcrumbs adding to the fields. When it hits a Punishment icon, it speeds up for 30 seconds and there will be some bombs adding to the fields, if it hits the bomb then the game ends.
+In this Capstone Project, I decided to extend the Snake Game project with some additional features, like adding Reward/Punishment mechanisms to the game. When the snake hits a coin then he can get extra points, when it catches a crown, the snake will slow down for a 30s to make it easier to navigate through the field and catch points, and there will be more foods adding to the fields. When it hits a Punishment icon, it speeds up for 15 seconds and there will be some bombs adding to the fields, if it hits the bomb then the game ends. The Reward/Punishment will only show up after score reaches 10 or more and randomly show up, and it will be dismissed in 5 seconds.
 
 This final project takes the starter repo from [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213), which was inspired by [this](https://codereview.stackexchange.com/questions/212296/snake-game-in-c-with-sdl) excellent StackOverflow post and set of responses.
 

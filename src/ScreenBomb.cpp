@@ -4,11 +4,11 @@
 ScreenBomb::ScreenBomb(std::size_t grid_width, std::size_t grid_height)
   :ScreenObject(grid_width,grid_height)
 {
-    // this->updatePos();
-    pos.x = -1;
-    pos.y = -1;
-    bombDuration = 0;
-    timeLeft = 0;
+    this->updatePos();
+    // pos.x = -1;
+    // pos.y = -1;
+    // bombDuration = 0;
+    // timeLeft = 0;
 }
 // ScreenBomb::ScreenBomb(){
 //   pos.x = -1;
@@ -17,13 +17,13 @@ ScreenBomb::ScreenBomb(std::size_t grid_width, std::size_t grid_height)
 //   timeLeft = 0;
 // }
 
-ScreenBomb::~ScreenBomb(){
-  //make the pos (-1,-1) means no need to render this Bomb object
-  pos.x = -1;
-  pos.y = -1;
-  bombDuration = 0;
-  timeLeft = 0;
-}
+// ScreenBomb::~ScreenBomb(){
+//   //make the pos (-1,-1) means no need to render this Bomb object
+//   pos.x = -1;
+//   pos.y = -1;
+//   bombDuration = 0;
+//   timeLeft = 0;
+// }
 
 int ScreenBomb::getTimeLeft(){
   return timeLeft;
@@ -44,9 +44,9 @@ void ScreenBomb::updatePos(){
   pos.y = random_h(engine);
   tStart = std::chrono::system_clock::now();
   //show the bomb on the screen for a random period (10-20s)
-  std::uniform_int_distribution<int> dist{10, 20};
+  std::uniform_int_distribution<int> dist{5, 10};
   bombDuration = dist(engine);
-  // bombDuration = 10;
+  timeLeft = bombDuration;
 }
 
 void ScreenBomb::checkDuration(){
@@ -55,7 +55,7 @@ void ScreenBomb::checkDuration(){
     auto duration = std::chrono::duration_cast<std::chrono::seconds>( tNow - tStart ).count();
     // std::cout<<"DURATION IS: "<<duration<<std::endl;
     timeLeft = bombDuration - duration;
-    if ((timeLeft <= 0) && (pos.x == -1)){
+    if ((timeLeft <= 0) && (pos.x > 0)){
       setBombPos(-1,-1);//hide the bomb Object
     }
     // sleep for 500ms between two cycles

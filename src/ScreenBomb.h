@@ -9,7 +9,7 @@ class ScreenBomb:public ScreenObject{
 public:
   ScreenBomb(std::size_t grid_width, std::size_t grid_height);
   // ScreenBomb();
-  ~ScreenBomb();
+  // ~ScreenBomb();
   void simulate();
   void updatePos();
   SDL_Point pos;

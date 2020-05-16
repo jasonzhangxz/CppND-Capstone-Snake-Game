@@ -90,6 +90,7 @@ void Game::Update() {
   if (food.pos.x == new_x && food.pos.y == new_y) {
     score++;
     PlaceFood();
+    std::cout<<"New Food Pos:"<<food.pos.x<<", "<<food.pos.y<<std::endl;
     // Grow snake and increase speed.
     snake.GrowBody();
     // snake.speed += 0.01;
@@ -106,13 +107,13 @@ void Game::Update() {
 
   if (isThereBomb) {
     std::cout<<"Bomb Screen time left: "<<bomb.getTimeLeft()<<std::endl;
-    // isThereBomb = (bomb.getTimeLeft() > 0 ? true : false);
-    if (bomb.getTimeLeft() > 0){
-      isThereBomb = true;
-    } else {
-      isThereBomb = false;
-      bomb.setBombPos(-1,-1);
-    }
+    isThereBomb = (bomb.getTimeLeft() > 0 ? true : false);
+    // if (bomb.getTimeLeft() > 0){
+    //   isThereBomb = true;
+    // } else {
+    //   isThereBomb = false;
+    //   bomb.setBombPos(-1,-1);
+    // }
   }
 }
 
