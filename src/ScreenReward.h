@@ -15,10 +15,14 @@ public:
   int getTimeLeft();
   void setPos(int x, int y);
 
-private:
+protected:
+  bool isRewardCell(int x, int y);
+
+// private:
   std::chrono::system_clock::time_point tStart,tNow;
   int expectDuration,timeLeft;
   void checkDuration();
+
 };
 
 #endif

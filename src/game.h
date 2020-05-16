@@ -20,6 +20,7 @@ class Game {
  private:
   Snake snake;
   ScreenFood food;
+  ScreenReward reward;
   ScreenBomb bomb;
   // SDL_Point food;
   //
@@ -33,6 +34,7 @@ class Game {
   bool isThereBomb{false};
   // std::size_t _gridWidth, _gridHeight;
   void PlaceFood();
+  void PlaceReward();
   void PlaceBomb();
   void Update();
 };

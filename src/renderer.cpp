@@ -32,74 +32,63 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
   }
 
-  boom  = SDL_LoadBMP("../images/bomb.bmp");
-  if (boom == NULL){
+  bombSur  = SDL_LoadBMP("../images/bomb.bmp");
+  if (bombSur == NULL){
     std::cout<<SDL_GetError()<<std::endl;
   } else {
-    std::cout<<"image loaded"<<std::endl;
+    std::cout<<"bomb image loaded"<<std::endl;
+    bombTex = SDL_CreateTextureFromSurface(sdl_renderer, bombSur);
+    SDL_FreeSurface(bombSur);
+  }
+
+  rewardSur  = SDL_LoadBMP("../images/reward.bmp");
+  if (rewardSur == NULL){
+    std::cout<<SDL_GetError()<<std::endl;
+  } else {
+    std::cout<<"Reward image loaded"<<std::endl;
+    rewardTex = SDL_CreateTextureFromSurface(sdl_renderer, rewardSur);
+    SDL_FreeSurface(rewardSur);
   }
 }
 
 Renderer::~Renderer() {
   SDL_DestroyWindow(sdl_window);
   SDL_DestroyTexture(texTarget);
-  SDL_DestroyTexture(bmpTex);
-  // SDL_DestroyRenderer(sdl_renderer);
-  SDL_FreeSurface(boom);
-  boom = NULL;
+  SDL_DestroyTexture(bombTex);
+  SDL_DestroyTexture(rewardTex);
+  SDL_DestroyRenderer(sdl_renderer);
+  SDL_FreeSurface(bombSur);
+  bombSur = NULL;
+  SDL_FreeSurface(rewardSur);
+  rewardSur = NULL;
   SDL_Quit();
 }
 
-void Renderer::Render(Snake const snake, SDL_Point const &food, SDL_Point const &bomb) {
-  SDL_Rect block;
+void Renderer::Render(Snake const snake, SDL_Point const &food, SDL_Point const &reward, SDL_Point const &bomb) {
+  SDL_Rect block, bombBlock, rewardBlock;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;
+  bombBlock.w = block.w;
+  bombBlock.h = block.h;
+  rewardBlock.w = block.w;
+  rewardBlock.h = block.h;
 
   // Clear screen
-  // SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
-  SDL_RenderClear(sdl_renderer);
-
-  // Render food
-  // SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF); //yellow
-  block.x = bomb.x * block.w;
-  block.y = bomb.y * block.h;
-  // SDL_RenderFillRect(sdl_renderer, &block);
-
-  //render bomb
-
+  // SDL_RenderClear(sdl_renderer);
   SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x00, 0x00, 0x00); //black
 
-  SDL_Rect *bblock = &block;
-  // bblock->w = block.w;
-  // bblock->h = block.h;
-  // bblock->x = (food.x + 2)* block.w;
-  // bblock->y = (food.y + 2)* block.h;
-
-
-  //Get window surface
-  // gScreenSurface = SDL_GetWindowSurface( sdl_window );
-  // SDL_BlitScaled( boom, NULL, gScreenSurface, bblock );
-  // //Update the surface
-  // SDL_UpdateWindowSurface( sdl_window );
-
-  bmpTex = SDL_CreateTextureFromSurface(sdl_renderer, boom);
-  // SDL_FreeSurface(boom);
-  // //Make a target texture to render too
-	// texTarget = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_RGBA8888,
-	// 	SDL_TEXTUREACCESS_TARGET, screen_width, screen_height);
-  //
-	// //Now render to the texture
-	// SDL_SetRenderTarget(sdl_renderer, texTarget);
+  // Clear screen
 	SDL_RenderClear(sdl_renderer);
-	SDL_RenderCopy(sdl_renderer, bmpTex, NULL, bblock);
-	// //Detach the texture
-	// SDL_SetRenderTarget(sdl_renderer, NULL);
-  //
-	// //Now render the texture target to our screen, but upside down
-	// SDL_RenderClear(sdl_renderer);
-	// SDL_RenderCopyEx(sdl_renderer, texTarget, NULL, bblock, 0, NULL, SDL_FLIP_VERTICAL);
-  // SDL_RenderCopy(sdl_renderer, texTarget, NULL, bblock);
-	// SDL_RenderPresent(sdl_renderer);
+  
+  //render bomb
+  bombBlock.x = bomb.x * block.w;
+  bombBlock.y = bomb.y * block.h;
+	SDL_RenderCopy(sdl_renderer, bombTex, NULL, &bombBlock);
+
+  //render reward
+  rewardBlock.x = reward.x * block.w;
+  rewardBlock.y = reward.y * block.h;
+	SDL_RenderCopy(sdl_renderer, rewardTex, NULL, &rewardBlock);
 
   // Render food
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF); //yellow

@@ -5,10 +5,13 @@
 Game::Game(std::size_t grid_width, std::size_t grid_height)
     : snake(grid_width, grid_height),
       food(grid_width, grid_height),
+      reward(grid_width, grid_height),
       bomb(grid_width, grid_height){
   PlaceFood();
-  bomb.setBombPos(-1,-1);
-  bomb.simulate();
+  reward.setPos(-1,-1);
+  reward.run();
+  bomb.setPos(-1,-1);
+  bomb.run();
 
 }
 
@@ -27,7 +30,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, snake);
     Update();
-    renderer.Render(snake, food.pos, bomb.pos);
+    renderer.Render(snake, food.pos, reward.pos, bomb.pos);
 
     frame_end = SDL_GetTicks();
 
@@ -65,13 +68,26 @@ void Game::PlaceFood() {
   }
 }
 
+void Game::PlaceReward() {
+  reward.updatePos();
+  while (true) {
+    // Check that the location is not occupied by a snake item before placing
+    // bomb.
+    if (snake.SnakeCell(reward.pos.x, reward.pos.y)) {
+      reward.updatePos();
+    } else {
+      return;
+    }
+  }
+}
+
 void Game::PlaceBomb() {
-  bomb.updatePos();
+  bomb.updatePos(reward);
   while (true) {
     // Check that the location is not occupied by a snake item before placing
     // bomb.
     if (snake.SnakeCell(bomb.pos.x, bomb.pos.y)) {
-      bomb.updatePos();
+      bomb.updatePos(reward);
     } else {
       return;
     }
@@ -98,6 +114,7 @@ void Game::Update() {
 
   if (isThereBomb) {
     std::cout<<"Bomb Screen time left: "<<bomb.getTimeLeft()<<std::endl;
+    std::cout<<"Reward Screen time left: "<<reward.getTimeLeft()<<std::endl;
     isThereBomb = (bomb.getTimeLeft() > 0 ? true : false);
     if (bomb.pos.x == new_x && bomb.pos.y == new_y) {
       snake.alive = false;
@@ -106,7 +123,7 @@ void Game::Update() {
 
   if ((score > scoreTriggerBomb) && (!isThereBomb)){
     std::cout<<"PLACED A BOMB!!!"<<std::endl;
-    // bomb.updatePos();
+    PlaceReward();
     PlaceBomb();
     isThereBomb = true;
     scoreTriggerBomb += 5; //place new bomb every 5 points

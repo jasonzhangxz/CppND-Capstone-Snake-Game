@@ -15,6 +15,11 @@ void ScreenReward::setPos(int x, int y){
   pos.x = x;
   pos.y = y;
 }
+
+bool ScreenReward::isRewardCell(int x, int y){
+  return ((x == pos.x && y == pos.y)?true:false);
+}
+
 void ScreenReward::run()
 {
     // launch reward function in a thread
