@@ -22,17 +22,12 @@ class Game {
   ScreenFood food;
   ScreenReward reward;
   ScreenBomb bomb;
-  // SDL_Point food;
-  //
-  // std::random_device dev;
-  // std::mt19937 engine;
-  // std::uniform_int_distribution<int> random_w;
-  // std::uniform_int_distribution<int> random_h;
 
   int score{0};
-  int scoreTriggerBomb{3};
-  bool isThereBomb{false};
-  // std::size_t _gridWidth, _gridHeight;
+  int scoreTriggerReward{3};
+  bool isBombValid{false};    //boolean to indicate whether bomb need to be showed up on screen
+  bool isRewardValid{false};  //boolean to indicate whether reward need to be showed up on screen
+  bool rewardInEffect{false}; //boolean to indicate whether reward is in effect
   void PlaceFood();
   void PlaceReward();
   void PlaceBomb();

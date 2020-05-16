@@ -109,27 +109,41 @@ void Game::Update() {
     std::cout<<"New Food Pos:"<<food.pos.x<<", "<<food.pos.y<<std::endl;
     // Grow snake and increase speed.
     snake.GrowBody();
-    // snake.speed += 0.01;
+    if (rewardInEffect) {
+      snake.speed = 0.1;
+    } else {
+      snake.speed += 0.01;
+    }
   }
 
-  if (isThereBomb) {
-    std::cout<<"Bomb Screen time left: "<<bomb.getTimeLeft()<<std::endl;
+  if (isRewardValid) {
     std::cout<<"Reward Screen time left: "<<reward.getTimeLeft()<<std::endl;
-    isThereBomb = (bomb.getTimeLeft() > 0 ? true : false);
+    isRewardValid = (reward.getTimeLeft() > 0 ? true : false);
+    if (reward.pos.x == new_x && reward.pos.y == new_y) {
+      rewardInEffect = true;
+      reward.setPos(-1,-1);
+      isRewardValid = false;
+    }
+  } else {
+    rewardInEffect = false;
+  }
+
+  if (isBombValid) {
+    std::cout<<"Bomb Screen time left: "<<bomb.getTimeLeft()<<std::endl;
+    isBombValid = (bomb.getTimeLeft() > 0 ? true : false);
     if (bomb.pos.x == new_x && bomb.pos.y == new_y) {
       snake.alive = false;
     }
   }
 
-  if ((score > scoreTriggerBomb) && (!isThereBomb)){
-    std::cout<<"PLACED A BOMB!!!"<<std::endl;
+  if ((score > scoreTriggerReward) && (!isRewardValid) && (!isBombValid)){
     PlaceReward();
     PlaceBomb();
-    isThereBomb = true;
-    scoreTriggerBomb += 5; //place new bomb every 5 points
+    isRewardValid = true;
+    isBombValid = true;
+    scoreTriggerReward += 5; //place new reward/bomb every 5 points
     std::cout<<"Bomb Pos:"<<bomb.pos.x<<", "<<bomb.pos.y<<std::endl;
   }
-
 
 }
 
