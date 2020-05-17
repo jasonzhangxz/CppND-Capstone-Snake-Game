@@ -28,6 +28,8 @@ class Game {
   bool isBombValid{false};    //boolean to indicate whether bomb need to be showed up on screen
   bool isRewardValid{false};  //boolean to indicate whether reward need to be showed up on screen
   bool rewardInEffect{false}; //boolean to indicate whether reward is in effect
+  int rewardTimeLeft{0};
+  int bombTimeLeft{0};
   void PlaceFood();
   void PlaceReward();
   void PlaceBomb();

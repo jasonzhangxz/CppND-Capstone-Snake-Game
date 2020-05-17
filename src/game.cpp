@@ -41,7 +41,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 
     // After every second, update the window title.
     if (frame_end - title_timestamp >= 1000) {
-      renderer.UpdateWindowTitle(score, frame_count);
+      renderer.UpdateWindowTitle(score, frame_count, rewardTimeLeft, bombTimeLeft);
       frame_count = 0;
       title_timestamp = frame_end;
     }
@@ -118,7 +118,8 @@ void Game::Update() {
 
   if (isRewardValid) {
     std::cout<<"Reward Screen time left: "<<reward.getTimeLeft()<<std::endl;
-    isRewardValid = (reward.getTimeLeft() > 0 ? true : false);
+    rewardTimeLeft = reward.getTimeLeft();
+    isRewardValid = (rewardTimeLeft > 0 ? true : false);
     if (reward.pos.x == new_x && reward.pos.y == new_y) {
       rewardInEffect = true;
       reward.setPos(-1,-1);
@@ -130,7 +131,8 @@ void Game::Update() {
 
   if (isBombValid) {
     std::cout<<"Bomb Screen time left: "<<bomb.getTimeLeft()<<std::endl;
-    isBombValid = (bomb.getTimeLeft() > 0 ? true : false);
+    bombTimeLeft = bomb.getTimeLeft();
+    isBombValid = (bombTimeLeft > 0 ? true : false);
     if (bomb.pos.x == new_x && bomb.pos.y == new_y) {
       snake.alive = false;
     }

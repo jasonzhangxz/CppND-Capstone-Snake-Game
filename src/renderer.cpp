@@ -39,6 +39,7 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cout<<"bomb image loaded"<<std::endl;
     bombTex = SDL_CreateTextureFromSurface(sdl_renderer, bombSur);
     SDL_FreeSurface(bombSur);
+    bombSur = NULL;
   }
 
   rewardSur  = SDL_LoadBMP("../images/reward.bmp");
@@ -48,19 +49,20 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cout<<"Reward image loaded"<<std::endl;
     rewardTex = SDL_CreateTextureFromSurface(sdl_renderer, rewardSur);
     SDL_FreeSurface(rewardSur);
+    rewardSur = NULL;
   }
 }
 
 Renderer::~Renderer() {
   SDL_DestroyWindow(sdl_window);
-  SDL_DestroyTexture(texTarget);
+  // SDL_DestroyTexture(texTarget);
   SDL_DestroyTexture(bombTex);
   SDL_DestroyTexture(rewardTex);
   SDL_DestroyRenderer(sdl_renderer);
-  SDL_FreeSurface(bombSur);
-  bombSur = NULL;
-  SDL_FreeSurface(rewardSur);
-  rewardSur = NULL;
+  // SDL_FreeSurface(bombSur);
+  // bombSur = NULL;
+  // SDL_FreeSurface(rewardSur);
+  // rewardSur = NULL;
   SDL_Quit();
 }
 
@@ -79,7 +81,7 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, SDL_Point const 
 
   // Clear screen
 	SDL_RenderClear(sdl_renderer);
-  
+
   //render bomb
   bombBlock.x = bomb.x * block.w;
   bombBlock.y = bomb.y * block.h;
@@ -118,7 +120,19 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, SDL_Point const 
   SDL_RenderPresent(sdl_renderer);
 }
 
-void Renderer::UpdateWindowTitle(int score, int fps) {
-  std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
+void Renderer::UpdateWindowTitle(int score, int fps, int timeReward, int timeBomb) {
+  std::string title{"Score : " + std::to_string(score) + " " + '\t' + "FPS : " + std::to_string(fps) + '\t'};
+  if (timeReward > 0) {
+    title = title + "Reward time left : " + std::to_string(timeReward) + '\t';
+  } else {
+    title = title + '\t' + '\t' + '\t' + '\t' + '\t';
+  }
+
+  if (timeBomb > 0) {
+    title = title + "Bomb time left : " + std::to_string(timeBomb);
+  } else {
+    title = title + '\t' + '\t' + '\t' + '\t';
+  }
+
   SDL_SetWindowTitle(sdl_window, title.c_str());
 }

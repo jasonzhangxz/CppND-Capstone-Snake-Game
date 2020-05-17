@@ -12,7 +12,7 @@ class Renderer {
   ~Renderer();
 
   void Render(Snake const snake, SDL_Point const &food, SDL_Point const &reward, SDL_Point const &bomb);
-  void UpdateWindowTitle(int score, int fps);
+  void UpdateWindowTitle(int score, int fps, int timeReward, int timeBomb);
 
  private:
   SDL_Window *sdl_window;
@@ -21,7 +21,7 @@ class Renderer {
   SDL_Surface *gScreenSurface;
 
   SDL_Texture *bombTex, *rewardTex;
-  SDL_Texture *texTarget;
+  // SDL_Texture *texTarget;
 
   const std::size_t screen_width;
   const std::size_t screen_height;
