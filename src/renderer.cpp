@@ -55,14 +55,9 @@ Renderer::Renderer(const std::size_t screen_width,
 
 Renderer::~Renderer() {
   SDL_DestroyWindow(sdl_window);
-  // SDL_DestroyTexture(texTarget);
   SDL_DestroyTexture(bombTex);
   SDL_DestroyTexture(rewardTex);
   SDL_DestroyRenderer(sdl_renderer);
-  // SDL_FreeSurface(bombSur);
-  // bombSur = NULL;
-  // SDL_FreeSurface(rewardSur);
-  // rewardSur = NULL;
   SDL_Quit();
 }
 

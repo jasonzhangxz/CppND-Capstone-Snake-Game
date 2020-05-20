@@ -19,9 +19,7 @@ class Renderer {
   SDL_Renderer *sdl_renderer;
   SDL_Surface *bombSur, *rewardSur;
   SDL_Surface *gScreenSurface;
-
   SDL_Texture *bombTex, *rewardTex;
-  // SDL_Texture *texTarget;
 
   const std::size_t screen_width;
   const std::size_t screen_height;
