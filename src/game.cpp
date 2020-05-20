@@ -8,9 +8,9 @@ Game::Game(std::size_t grid_width, std::size_t grid_height)
       reward(grid_width, grid_height),
       bomb(grid_width, grid_height){
   PlaceFood();
-  reward.setPos(-1,-1);
+  reward.setPos(-1,-1);//in the beginning hide the reward
   reward.run();
-  bomb.setPos(-1,-1);
+  bomb.setPos(-1,-1); //in the beginning hide the bomb
   bomb.run();
 
 }
@@ -41,7 +41,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 
     // After every second, update the window title.
     if (frame_end - title_timestamp >= 1000) {
-      renderer.UpdateWindowTitle(score, frame_count, rewardTimeLeft, bombTimeLeft);
+      renderer.UpdateWindowTitle(score, frame_count, rewardTimeLeft,reducedSpeedTimeLeft, bombTimeLeft);
       frame_count = 0;
       title_timestamp = frame_end;
     }
@@ -82,7 +82,7 @@ void Game::PlaceReward() {
 }
 
 void Game::PlaceBomb() {
-  bomb.updatePos(reward);
+  bomb.updatePos(reward);//the bomb is going to be around the reward
   while (true) {
     // Check that the location is not occupied by a snake item before placing
     // bomb.
@@ -110,7 +110,7 @@ void Game::Update() {
     // Grow snake and increase speed.
     snake.GrowBody();
     if (rewardInEffect) {
-      snake.speed = 0.1;
+      snake.speed = rewardSpeed;
     } else {
       snake.speed += 0.01;
     }
@@ -122,11 +122,20 @@ void Game::Update() {
     isRewardValid = (rewardTimeLeft > 0 ? true : false);
     if (reward.pos.x == new_x && reward.pos.y == new_y) {
       rewardInEffect = true;
+      snake.speed = rewardSpeed;
       reward.setPos(-1,-1);
       isRewardValid = false;
+      rewardTimeLeft = 0;
+      reducedSpeedTimeLeft = 15;
+      reducedSpeedTimeStart = SDL_GetTicks();
     }
-  } else {
-    rewardInEffect = false;
+  }
+
+  if (rewardInEffect) {
+    reducedSpeedTimeLeft = 15 - (SDL_GetTicks()-reducedSpeedTimeStart)/1000;
+    if (reducedSpeedTimeLeft <= 0){
+      rewardInEffect = false;
+    }
   }
 
   if (isBombValid) {

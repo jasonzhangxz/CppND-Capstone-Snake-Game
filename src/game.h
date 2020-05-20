@@ -18,22 +18,26 @@ class Game {
   int GetSize() const;
 
  private:
+  void PlaceFood();
+  void PlaceReward();
+  void PlaceBomb();
+  void Update();
   Snake snake;
   ScreenFood food;
   ScreenReward reward;
   ScreenBomb bomb;
 
   int score{0};
-  int scoreTriggerReward{3};
+  int scoreTriggerReward{3};  //when it reaches this score, it will trigger the showup of reward/bomb on scree
   bool isBombValid{false};    //boolean to indicate whether bomb need to be showed up on screen
   bool isRewardValid{false};  //boolean to indicate whether reward need to be showed up on screen
   bool rewardInEffect{false}; //boolean to indicate whether reward is in effect
-  int rewardTimeLeft{0};
-  int bombTimeLeft{0};
-  void PlaceFood();
-  void PlaceReward();
-  void PlaceBomb();
-  void Update();
+  float rewardSpeed{0.1};     //when it hit the reward, keep the snake at initial speed for certain time
+  int rewardTimeLeft{0};      //Afte this amount of time the reward will go away from the screen
+  int bombTimeLeft{0};        //Afte this amount of time the bomb will go away from the screen
+  int reducedSpeedTimeLeft{0};//when the snake hit the reward, the speed is kept slow for certain amount of time
+  Uint32 reducedSpeedTimeStart;
+  // Uint32 reducedSpeedTimeEnd;
 };
 
 #endif
