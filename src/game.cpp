@@ -112,12 +112,12 @@ void Game::Update() {
     if (rewardInEffect) {
       snake.speed = rewardSpeed;
     } else {
-      snake.speed += 0.01;
+      snake.speed += 0.01; //TODO: change this back to +=0.02 to make the speed change more obvious
     }
   }
 
   if (isRewardValid) {
-    std::cout<<"Reward Screen time left: "<<reward.getTimeLeft()<<std::endl;
+    // std::cout<<"Reward Screen time left: "<<reward.getTimeLeft()<<std::endl;
     rewardTimeLeft = reward.getTimeLeft();
     isRewardValid = (rewardTimeLeft > 0 ? true : false);
     if (reward.pos.x == new_x && reward.pos.y == new_y) {
@@ -139,7 +139,7 @@ void Game::Update() {
   }
 
   if (isBombValid) {
-    std::cout<<"Bomb Screen time left: "<<bomb.getTimeLeft()<<std::endl;
+    // std::cout<<"Bomb Screen time left: "<<bomb.getTimeLeft()<<std::endl;
     bombTimeLeft = bomb.getTimeLeft();
     isBombValid = (bombTimeLeft > 0 ? true : false);
     if (bomb.pos.x == new_x && bomb.pos.y == new_y) {
@@ -153,7 +153,7 @@ void Game::Update() {
     isRewardValid = true;
     isBombValid = true;
     scoreTriggerReward += 5; //place new reward/bomb every 5 points
-    std::cout<<"Bomb Pos:"<<bomb.pos.x<<", "<<bomb.pos.y<<std::endl;
+    // std::cout<<"Bomb Pos:"<<bomb.pos.x<<", "<<bomb.pos.y<<std::endl;
   }
 
 }

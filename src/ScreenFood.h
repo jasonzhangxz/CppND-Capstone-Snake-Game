@@ -7,10 +7,9 @@
 class ScreenFood:public ScreenObject{
 public:
   ScreenFood(std::size_t grid_width, std::size_t grid_height);
-  // ~ScreenFood();
-  void simulate();
+
+  void run();
   void updatePos();
-  SDL_Point pos;
 
 private:
 

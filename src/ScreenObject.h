@@ -7,7 +7,6 @@
 #include <memory>
 #include <thread>
 #include <mutex>
-#include "snake.h"
 #include "SDL.h"
 
 enum ObjectType
@@ -27,20 +26,21 @@ public:
 
     // getter and setter
     int getID() { return _id; }
-    // void setPosition(double x, double y);
-    // void getPosition(double &x, double &y);
     ObjectType getType() { return _type; }
+    void setPos(int x, int y);
 
     // typical behaviour methods
-    virtual void simulate(){};
+    virtual void run(){};
+    virtual void updatePos(){};
+
+    SDL_Point pos;
 
 protected:
     ObjectType _type;                 // identifies the class type
     int _id;                          // every screen object has its own unique id
-    // Snake snake;                      // snake object
     std::vector<std::thread> threads; // holds all threads that have been launched within this object
-    static std::mutex _mtx;           // mutex shared by all screen objects for protecting cout
-    //TODO: clean up the comments here
+    // static std::mutex _mtx;           // mutex shared by all screen objects for protecting cout
+    //The below is the random engine to generate random positions for screen objects
     std::random_device dev;
     std::mt19937 engine;
     std::uniform_int_distribution<int> random_w;

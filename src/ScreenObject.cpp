@@ -4,19 +4,13 @@
 // init static variable
 int ScreenObject::_idCnt = 0;
 
-std::mutex ScreenObject::_mtx;
+// std::mutex ScreenObject::_mtx;
 
-// void ScreenObject::setPosition(double x, double y)
-// {
-//     _posX = x;
-//     _posY = y;
-// }
-//
-// void ScreenObject::getPosition(double &x, double &y)
-// {
-//     x = _posX;
-//     y = _posY;
-// }
+void ScreenObject::setPos(int x, int y)
+{
+    pos.x = x;
+    pos.y = y;
+}
 
 ScreenObject::ScreenObject(std::size_t grid_width, std::size_t grid_height)
   :engine(dev()),

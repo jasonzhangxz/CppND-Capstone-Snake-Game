@@ -8,10 +8,10 @@ ScreenFood::ScreenFood(std::size_t grid_width, std::size_t grid_height)
 }
 
 
-void ScreenFood::simulate()
+void ScreenFood::run()
 {
     // launch Food function in a thread
-    threads.emplace_back(std::thread(&ScreenFood::updatePos, this));
+    // threads.emplace_back(std::thread(&ScreenFood::updatePos, this));
 }
 
 void ScreenFood::updatePos(){
