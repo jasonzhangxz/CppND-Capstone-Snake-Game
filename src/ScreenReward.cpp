@@ -16,7 +16,7 @@ void ScreenReward::updatePos(){
   pos.y = random_h(engine);
   tStart = std::chrono::system_clock::now();
   //show the reward on the screen for a random period (5-15s)
-  std::uniform_int_distribution<int> dist{5, 15};
+  std::uniform_int_distribution<int> dist{onScreenTimeLowBound, onScreenTimeHighBound};
   expectDuration = dist(engine);
   timeLeft = expectDuration;
 }

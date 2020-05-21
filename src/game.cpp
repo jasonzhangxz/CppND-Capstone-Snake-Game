@@ -111,7 +111,7 @@ void Game::Update() {
     if (rewardInEffect) {
       snake.speed = rewardSpeed;
     } else {
-      snake.speed += 0.01; //TODO: change this back to +=0.02 to make the speed change more obvious
+      snake.speed += speedIncrement;
     }
   }
 
@@ -121,19 +121,21 @@ void Game::Update() {
     isRewardValid = (rewardTimeLeft > 0 ? true : false);
     if (reward.pos.x == new_x && reward.pos.y == new_y) {
       rewardInEffect = true;
+      resumeSpeed = snake.speed;
       snake.speed = rewardSpeed;
       reward.setPos(-1,-1);
       isRewardValid = false;
       rewardTimeLeft = 0;
-      reducedSpeedTimeLeft = 15;
+      reducedSpeedTimeLeft = rewardTime;
       reducedSpeedTimeStart = SDL_GetTicks();
     }
   }
 
   if (rewardInEffect) {
-    reducedSpeedTimeLeft = 15 - (SDL_GetTicks()-reducedSpeedTimeStart)/1000;
+    reducedSpeedTimeLeft = rewardTime - (SDL_GetTicks()-reducedSpeedTimeStart)/1000;
     if (reducedSpeedTimeLeft <= 0){
       rewardInEffect = false;
+      snake.speed = resumeSpeed;
     }
   }
 
@@ -151,7 +153,7 @@ void Game::Update() {
     PlaceBomb();
     isRewardValid = true;
     isBombValid = true;
-    scoreTriggerReward += 5; //place new reward/bomb every 5 points
+    scoreTriggerReward += rewardIncrement; //place new reward/bomb every * points
     // std::cout<<"Bomb Pos:"<<bomb.pos.x<<", "<<bomb.pos.y<<std::endl;
   }
 

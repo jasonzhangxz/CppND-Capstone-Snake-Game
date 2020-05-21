@@ -16,6 +16,8 @@ public:
 protected:
   std::chrono::system_clock::time_point tStart,tNow;
   int expectDuration,timeLeft;
+  int onScreenTimeLowBound{5};
+  int onScreenTimeHighBound{10};
 
 };
 

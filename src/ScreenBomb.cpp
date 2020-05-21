@@ -20,7 +20,7 @@ void ScreenBomb::updatePos(ScreenReward& reward){
 
   tStart = std::chrono::system_clock::now();
   //show the bomb on the screen for a random period (15-25s)
-  std::uniform_int_distribution<int> dist{15, 25};
+  std::uniform_int_distribution<int> dist{onScreenTimeLowBound, onScreenTimeHighBound};
   expectDuration = dist(engine);
   timeLeft = expectDuration;
 }

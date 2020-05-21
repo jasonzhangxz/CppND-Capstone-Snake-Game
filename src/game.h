@@ -29,13 +29,17 @@ class Game {
 
   int score{0};
   int scoreTriggerReward{3};  //when it reaches this score, it will trigger the showup of reward/bomb on scree
+  int rewardIncrement{5};     //place reward/bomb on the screen every # points
   bool isBombValid{false};    //boolean to indicate whether bomb need to be showed up on screen
   bool isRewardValid{false};  //boolean to indicate whether reward need to be showed up on screen
   bool rewardInEffect{false}; //boolean to indicate whether reward is in effect
   float rewardSpeed{0.1};     //when it hit the reward, keep the snake at initial speed for certain time
+  float resumeSpeed;          //when the reward time is over, resume to this speed
+  float speedIncrement{0.015};//increase the speed this much every food the snake eats
   int rewardTimeLeft{0};      //Afte this amount of time the reward will go away from the screen
   int bombTimeLeft{0};        //Afte this amount of time the bomb will go away from the screen
-  int reducedSpeedTimeLeft{0};//when the snake hit the reward, the speed is kept slow for certain amount of time
+  int reducedSpeedTimeLeft{0};//when the snake hit the reward, to show how much time left for the slow speed 
+  int rewardTime{15};         //when the snake hit the reward, the speed keeps slow for thie long
   Uint32 reducedSpeedTimeStart;
   // Uint32 reducedSpeedTimeEnd;
 };
