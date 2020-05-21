@@ -116,17 +116,17 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, SDL_Point const 
 }
 
 void Renderer::UpdateWindowTitle(int score, int fps, int timeReward, int timeReducedSpeed, int timeBomb) {
-  std::string title{"Score : " + std::to_string(score) + " " + '\t' + "FPS : " + std::to_string(fps) + '\t'};
+  std::string title{"Score : " + std::to_string(score) + " " + '\t' + "FPS : " + std::to_string(fps) + "  " + '\t'};
   if (timeReward > 0) {
-    title = title + "Reward disappears in (" + std::to_string(timeReward) + ") s." + '\t';
+    title = title + "Reward vanish in (" + std::to_string(timeReward) + ") s." + '\t';
   } else if(timeReducedSpeed > 0){
-    title = title + "Reduced Speed void in (" + std::to_string(timeReducedSpeed) + ") s." + '\t';
+    title = title + "LowSpd invalid in (" + std::to_string(timeReducedSpeed) + ") s." + '\t';
   } else {
-    title = title + '\t' + '\t' + '\t' + '\t' + '\t';
+    title = title + '\t' + '\t' + '\t' + '\t' + '\t'+'\t';
   }
 
   if (timeBomb > 0) {
-    title = title + "Bomb disappears in (" + std::to_string(timeBomb)+ ") s." + '\t';
+    title = title + "Bomb vanish in (" + std::to_string(timeBomb)+ ") s." + '\t';
   } else {
     title = title + '\t' + '\t' + '\t' + '\t' + '\t';
   }
