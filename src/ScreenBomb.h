@@ -8,7 +8,6 @@
 class ScreenBomb:public ScreenReward{
 public:
   ScreenBomb(std::size_t grid_width, std::size_t grid_height);
-  void run();
   void updatePos(ScreenReward& reward);
 
 private:

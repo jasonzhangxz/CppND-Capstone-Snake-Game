@@ -9,14 +9,13 @@
 class ScreenReward:public ScreenObject{
 public:
   ScreenReward(std::size_t grid_width, std::size_t grid_height);
-  void run();
   void updatePos();
   int getTimeLeft();
+  void checkDuration();
 
 protected:
   std::chrono::system_clock::time_point tStart,tNow;
   int expectDuration,timeLeft;
-  void checkDuration();
 
 };
 

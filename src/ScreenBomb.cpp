@@ -9,12 +9,6 @@ ScreenBomb::ScreenBomb(std::size_t grid_width, std::size_t grid_height)
    grid_height_ = grid_height;
 }
 
-void ScreenBomb::run()
-{
-    // launch bomb function in a thread
-    threads.emplace_back(std::thread(&ScreenBomb::checkDuration, this));
-}
-
 void ScreenBomb::updatePos(ScreenReward& reward){
   int x,y;
   std::uniform_int_distribution<int> offset{1, 5};

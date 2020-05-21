@@ -20,11 +20,3 @@ ScreenObject::ScreenObject(std::size_t grid_width, std::size_t grid_height)
     _type = ObjectType::noObject;
     _id = _idCnt++;
 }
-
-ScreenObject::~ScreenObject()
-{
-    // set up thread barrier before this object is destroyed
-    std::for_each(threads.begin(), threads.end(), [](std::thread &t) {
-        t.join();
-    });
-}
