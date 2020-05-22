@@ -3,10 +3,10 @@
 #include "ScreenBomb.h"
 
 ScreenBomb::ScreenBomb(std::size_t grid_width, std::size_t grid_height)
-  :ScreenReward(grid_width, grid_height)
+  :ScreenReward(grid_width, grid_height),
+   grid_width_(grid_width),grid_height_(grid_height)
 {
-   grid_width_ = grid_width;
-   grid_height_ = grid_height;
+
 }
 
 void ScreenBomb::updatePos(ScreenReward& reward){
