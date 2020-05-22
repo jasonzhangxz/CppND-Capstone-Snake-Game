@@ -9,6 +9,7 @@ public:
   ScreenFood(std::size_t grid_width, std::size_t grid_height);
 
   void updatePos();
+  void run();
 
 private:
 

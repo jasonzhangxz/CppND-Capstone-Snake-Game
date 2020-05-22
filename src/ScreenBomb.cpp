@@ -24,3 +24,10 @@ void ScreenBomb::updatePos(ScreenReward& reward){
   expectDuration = dist(engine);
   timeLeft = expectDuration;
 }
+
+
+void ScreenBomb::run()
+{
+    // launch bomb function in a thread
+    threads.emplace_back(std::thread(&ScreenBomb::checkDuration, this));
+}

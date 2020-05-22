@@ -11,7 +11,7 @@ public:
   ScreenReward(std::size_t grid_width, std::size_t grid_height);
   void updatePos();
   int getTimeLeft();
-  void checkDuration();
+  void run();
 
 protected:
   std::chrono::system_clock::time_point tStart,tNow;
@@ -19,6 +19,7 @@ protected:
   int onScreenTimeLowBound{5};
   int onScreenTimeHighBound{10};
 
+  void checkDuration();
 };
 
 #endif

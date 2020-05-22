@@ -9,7 +9,9 @@ Game::Game(std::size_t grid_width, std::size_t grid_height)
       bomb(grid_width, grid_height){
   PlaceFood();
   reward.setPos(-1,-1);//in the beginning hide the reward
-  bomb.setPos(-1,-1); //in the beginning hide the bomb
+  reward.run();
+  bomb.setPos(-1,-1); //in the beginning hide the bomb	  bomb.setPos(-1,-1); //in the beginning hide the bomb
+  bomb.run();
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
@@ -27,8 +29,6 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, snake);
     Update();
-    reward.checkDuration();
-    bomb.checkDuration();
     renderer.Render(snake, food.pos, reward.pos, bomb.pos);
 
     frame_end = SDL_GetTicks();

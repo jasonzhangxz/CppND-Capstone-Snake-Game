@@ -22,7 +22,7 @@ void ScreenReward::updatePos(){
 }
 
 void ScreenReward::checkDuration(){
-  // while(running){
+  while(true){
     tNow = std::chrono::system_clock::now();
     auto elapse = std::chrono::duration_cast<std::chrono::seconds>( tNow - tStart ).count();
     timeLeft = expectDuration - elapse;
@@ -30,7 +30,13 @@ void ScreenReward::checkDuration(){
       setPos(-1,-1);//hide the Object from the screen
       timeLeft = 0;
     }
-  //   // sleep for 500ms between two cycles
-  //   std::this_thread::sleep_for(std::chrono::milliseconds(500));
-  // }
+    // sleep for 500ms between two cycles
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+  }
+}
+
+void ScreenReward::run()
+{
+    // launch reward function in a thread
+    threads.emplace_back(std::thread(&ScreenReward::checkDuration, this));
 }

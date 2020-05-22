@@ -11,3 +11,8 @@ void ScreenFood::updatePos(){
   pos.x = random_w(engine);
   pos.y = random_h(engine);
 }
+
+void ScreenFood::run(){
+  // launch Food function in a thread	    // launch Food function in a thread
+  threads.emplace_back(std::thread(&ScreenFood::updatePos, this));
+}
