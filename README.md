@@ -20,15 +20,15 @@ The code structure stays about the same, other than the food is now an object of
 <img src="images/codeStrtructure.png"/>
 
 ## New Snake Game looks like below
-After the extension, it looks like something below. A video can be found [here](./iamges/snakeGame.mp4)
-<video src="images/snakeGameExt.gif"/>
+After the extension, it looks like something below. A video can be found [here](./images/snakeGame.mp4)
+<img src="images/snakeGameExt.gif"/>
 
 ## [Rubrics](https://review.udacity.com/#!/rubrics/2533/view) covered in this final project
 1. The project uses Object Oriented Programming techniques: as I create the class hierarchy of [`ScreenObject`](./src/ScreenObject.h), [`ScreenReward`](./src/ScreenReward.h), [`ScreenBomb`](./src/ScreenBomb.h).
 2. Class constructors utilize member initialization lists: this can be seen in [`ScreenBomb`](./src/ScreenBomb.cpp#L7).
 3. Classes follow an appropriate inheritance hierarchy. As you can see in the class hierarchy diagram.
 4. Derived class functions override virtual base class functions. The [`ScreenFood::updatePos()`](./src/ScreenFood.cpp#L10) override the virtual base class function [`virtual void updatePos()`](./src/ScreenObject.h#L33).
-5. The project makes use of references in function declarations. Here is an example of passing [`reward`](./src/ScreenBomb.h#L11) as a reference. Another example is to pass the snake, food, reward, bomb objects to [`Render()`](./src/render.h#L14) as references instead of copies to save a lot of memory allocation.
+5. The project makes use of references in function declarations. Here is an example of passing [`reward`](./src/ScreenBomb.h#L11) as a reference. Another example is to pass the snake, food, reward, bomb objects to [`Render()`](./src/renderer.h#L14) as references instead of copies to save a lot of memory allocation.
 
 
 
