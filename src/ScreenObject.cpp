@@ -4,7 +4,6 @@
 // init static variable
 int ScreenObject::_idCnt = 0;
 
-// std::mutex ScreenObject::_mtx;
 
 ScreenObject::ScreenObject(std::size_t grid_width, std::size_t grid_height)
   :engine(dev()),
@@ -15,13 +14,19 @@ ScreenObject::ScreenObject(std::size_t grid_width, std::size_t grid_height)
     _id = _idCnt++;
 }
 
-ScreenObject::~ScreenObject()
+ScreenObject::ScreenObject(const ScreenObject &object)
+  :engine(dev()),
+  random_w(0, 31),
+  random_h(0, 31)
 {
-    // set up thread barrier before this object is destroyed
-    std::for_each(threads.begin(), threads.end(), [](std::thread &t) {
-        t.join();
-    });
+  pos = object.pos;
+  _type = object._type;
+  _id = object._id;
 }
+
+//ScreenObject::~ScreenObject()
+//{
+//}
 
 void ScreenObject::setPos(int x, int y)
 {

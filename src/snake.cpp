@@ -2,6 +2,21 @@
 #include <cmath>
 #include <iostream>
 
+
+Snake& Snake::operator= (const Snake& snake){
+  direction = snake.direction;
+  speed = snake.speed;
+  size = snake.size;
+  alive = snake.alive;
+  head_x = snake.head_x;
+  head_y = snake.head_y;
+  body = snake.body;
+
+  growing = snake.growing;
+  grid_width = snake.grid_width;
+  grid_height = snake.grid_height;
+}
+
 void Snake::Update() {
   SDL_Point prev_cell{
       static_cast<int>(head_x),

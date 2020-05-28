@@ -38,5 +38,5 @@ void ScreenReward::checkDuration(){
 void ScreenReward::run()
 {
     // launch reward function in a thread
-    threads.emplace_back(std::thread(&ScreenReward::checkDuration, this));
+    checkDuration();
 }

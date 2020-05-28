@@ -2,16 +2,16 @@
 #include <iostream>
 #include "SDL.h"
 
-Game::Game(std::size_t grid_width, std::size_t grid_height)
-    : snake(grid_width, grid_height),
-      food(grid_width, grid_height),
-      reward(grid_width, grid_height),
-      bomb(grid_width, grid_height){
-  PlaceFood();
+Game::Game(std::size_t grid_width, std::size_t grid_height, Snake &Snake, ScreenFood &Food)
+    : reward(grid_width, grid_height),
+      bomb(grid_width, grid_height),
+      snake(Snake),
+      food(Food){
+   PlaceFood();
   reward.setPos(-1,-1);//in the beginning hide the reward
-  reward.run();
+//  reward.run();
   bomb.setPos(-1,-1); //in the beginning hide the bomb	  bomb.setPos(-1,-1); //in the beginning hide the bomb
-  bomb.run();
+//  bomb.run();
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
@@ -54,18 +54,18 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   }
 }
 
-void Game::PlaceFood() {
+ void Game::PlaceFood() {
 
-  while (true) {
-    // Check that the location is not occupied by a snake item before placing
-    // food.
-    if (snake.SnakeCell(food.pos.x, food.pos.y)) {
-      food.updatePos();
-    } else {
-      return;
-    }
-  }
-}
+   while (true) {
+     // Check that the location is not occupied by a snake item before placing
+     // food.
+     if (snake.SnakeCell(food.pos.x, food.pos.y)) {
+       food.updatePos();
+     } else {
+       return;
+     }
+   }
+ }
 
 void Game::PlaceReward() {
   reward.updatePos();
@@ -104,10 +104,10 @@ void Game::Update() {
   // Check if there's food over here
   if (food.pos.x == new_x && food.pos.y == new_y) {
     score++;
-    PlaceFood();
-    std::cout<<"New Food Pos:"<<food.pos.x<<", "<<food.pos.y<<std::endl;
-    // Grow snake and increase speed.
-    snake.GrowBody();
+     PlaceFood();
+     std::cout<<"New Food Pos:"<<food.pos.x<<", "<<food.pos.y<<std::endl;
+     // Grow snake and increase speed.
+     snake.GrowBody();
     if (rewardInEffect) {
       snake.speed = rewardSpeed;
     } else {

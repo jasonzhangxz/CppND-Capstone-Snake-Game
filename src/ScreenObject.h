@@ -22,7 +22,8 @@ class ScreenObject
 public:
     // constructor / desctructor
     ScreenObject(std::size_t grid_width, std::size_t grid_height);
-    ~ScreenObject();
+    ScreenObject(const ScreenObject &object);
+//    ~ScreenObject();
 
     // getter and setter
     int getID() { return _id; }
@@ -38,11 +39,10 @@ public:
 protected:
     ObjectType _type;                 // identifies the class type
     int _id;                          // every screen object has its own unique id
-    std::vector<std::thread> threads; // holds all threads that have been launched within this object
-    // static std::mutex _mtx;           // mutex shared by all screen objects for protecting cout
+
     //The below is the random engine to generate random positions for screen objects
     std::random_device dev;
-    std::mt19937 engine;
+    std::mt19937_64 engine;
     std::uniform_int_distribution<int> random_w;
     std::uniform_int_distribution<int> random_h;
 

@@ -11,7 +11,7 @@
 
 class Game {
  public:
-  Game(std::size_t grid_width, std::size_t grid_height);
+  Game(std::size_t grid_width, std::size_t grid_height, Snake &Snake, ScreenFood &Food);
   void Run(Controller const &controller, Renderer &renderer,
            std::size_t target_frame_duration);
   int GetScore() const;
@@ -38,10 +38,9 @@ class Game {
   float speedIncrement{0.015};//increase the speed this much every food the snake eats
   int rewardTimeLeft{0};      //Afte this amount of time the reward will go away from the screen
   int bombTimeLeft{0};        //Afte this amount of time the bomb will go away from the screen
-  int reducedSpeedTimeLeft{0};//when the snake hit the reward, to show how much time left for the slow speed 
+  int reducedSpeedTimeLeft{0};//when the snake hit the reward, to show how much time left for the slow speed
   int rewardTime{15};         //when the snake hit the reward, the speed keeps slow for thie long
   Uint32 reducedSpeedTimeStart;
-  // Uint32 reducedSpeedTimeEnd;
 };
 
 #endif

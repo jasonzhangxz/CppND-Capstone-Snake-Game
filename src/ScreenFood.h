@@ -3,15 +3,19 @@
 
 #include "ScreenObject.h"
 #include "SDL.h"
+#include "snake.h"
+#include <future>
 
 class ScreenFood:public ScreenObject{
 public:
   ScreenFood(std::size_t grid_width, std::size_t grid_height);
+  ScreenFood(const ScreenFood &food);
 
   void updatePos();
-  void run();
+  void run(std::future<bool> running);
 
 private:
+  void placeFood();
 
 };
 
