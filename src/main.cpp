@@ -22,15 +22,18 @@ int main() {
   Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
   Controller controller;
   Snake snake(kGridWidth, kGridHeight);
-  ScreenFood* food = new ScreenFood(kGridWidth, kGridHeight);
+//  ScreenFood* food = new ScreenFood(kGridWidth, kGridHeight);
+    std::unique_ptr<ScreenFood> food(new ScreenFood(kGridWidth, kGridHeight));
 
   ScreenReward* reward = new ScreenReward(kGridWidth, kGridHeight);
+//  std::unique_ptr<ScreenReward> reward(new ScreenReward(kGridWidth, kGridHeight));
   std::thread th1(&ScreenReward::run, reward, std::move(running1));
 
   ScreenBomb* bomb = new ScreenBomb(kGridWidth, kGridHeight);
+//  std::unique_ptr<ScreenBomb> bomb(new ScreenBomb(kGridWidth, kGridHeight));
   std::thread th2(&ScreenBomb::run, bomb, std::move(running2));
 
-  Game game(kGridWidth, kGridHeight, snake, food, reward, bomb);
+  Game game(kGridWidth, kGridHeight, snake, std::move(food), reward, bomb);
   game.Run(controller, renderer, kMsPerFrame);
 
   std::cout << "Game has terminated successfully!\n";
@@ -43,7 +46,7 @@ int main() {
   th1.join();
   th2.join();
 
-  delete food;
+//  delete food;
   delete reward;
   delete bomb;
 

@@ -2,10 +2,10 @@
 #include <iostream>
 #include "SDL.h"
 
-Game::Game(std::size_t grid_width, std::size_t grid_height, Snake &Snake, ScreenFood* Food,
+Game::Game(std::size_t grid_width, std::size_t grid_height, Snake &Snake, std::unique_ptr<ScreenFood> Food,
            ScreenReward* Reward, ScreenBomb* Bomb)
     : snake(Snake),
-      food(Food),
+      food(std::move(Food)),
       reward(Reward),
       bomb(Bomb){
     PlaceFood();
