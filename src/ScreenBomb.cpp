@@ -22,7 +22,7 @@ void ScreenBomb::updatePos(ScreenReward& reward){
   std::uniform_int_distribution<int> dist{onScreenTimeLowBound, onScreenTimeHighBound};
   expectDuration = dist(engine);
   timeLeft = expectDuration;
-  std::cout<<"Bomb updatePos() ExpectDuration "<<expectDuration<<" ;timeLeft: "<<timeLeft<<std::endl;
+  // std::cout<<"Bomb updatePos() ExpectDuration "<<expectDuration<<" ;timeLeft: "<<timeLeft<<std::endl;
 
 }
 
@@ -35,7 +35,7 @@ void ScreenBomb::run(std::future<bool> running)
         checkDuration();
         // sleep for 500ms between two cycles
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        std::cout<<"Bomb ExpectDuration "<<expectDuration<<" ;timeLeft: "<<timeLeft<<std::endl;
+        // std::cout<<"Bomb ExpectDuration "<<expectDuration<<" ;timeLeft: "<<timeLeft<<std::endl;
 
     }
     std::cout << "Bomb Thread End" << std::endl;

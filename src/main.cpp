@@ -23,8 +23,8 @@ int main() {
   Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
   Controller controller;
   Snake snake(kGridWidth, kGridHeight);
-  ScreenFood food(kGridWidth, kGridHeight);
-  std::thread th1(&ScreenFood::run, &food, std::move(running1));
+  ScreenFood* food = new ScreenFood(kGridWidth, kGridHeight);
+  std::thread th1(&ScreenFood::run, food, std::move(running1));
 
   ScreenReward* reward = new ScreenReward(kGridWidth, kGridHeight);
   std::thread th2(&ScreenReward::run, reward, std::move(running2));
@@ -42,10 +42,14 @@ int main() {
   exitSignal1.set_value((snake.alive));
   exitSignal2.set_value((snake.alive));
   exitSignal3.set_value((snake.alive));
+
   th1.join();
   th2.join();
   th3.join();
+
+  delete food;
   delete reward;
   delete bomb;
+
   return 0;
 }

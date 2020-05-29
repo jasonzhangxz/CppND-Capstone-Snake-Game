@@ -2,7 +2,7 @@
 #include <iostream>
 #include "SDL.h"
 
-Game::Game(std::size_t grid_width, std::size_t grid_height, Snake &Snake, ScreenFood &Food,
+Game::Game(std::size_t grid_width, std::size_t grid_height, Snake &Snake, ScreenFood* Food,
            ScreenReward* Reward, ScreenBomb* Bomb)
     : snake(Snake),
       food(Food),
@@ -28,7 +28,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, snake);
     Update();
-    renderer.Render(snake, food.pos, reward->pos, bomb->pos);
+    renderer.Render(snake, food->pos, reward->pos, bomb->pos);
 
     frame_end = SDL_GetTicks();
 
@@ -58,8 +58,8 @@ void Game::Run(Controller const &controller, Renderer &renderer,
    while (true) {
      // Check that the location is not occupied by a snake item before placing
      // food.
-     if (snake.SnakeCell(food.pos.x, food.pos.y)) {
-       food.updatePos();
+     if (snake.SnakeCell(food->pos.x, food->pos.y)) {
+       food->updatePos();
      } else {
        return;
      }
@@ -101,10 +101,10 @@ void Game::Update() {
   int new_y = static_cast<int>(snake.head_y);
 
   // Check if there's food over here
-  if (food.pos.x == new_x && food.pos.y == new_y) {
+  if (food->pos.x == new_x && food->pos.y == new_y) {
     score++;
      PlaceFood();
-     std::cout<<"New Food Pos:"<<food.pos.x<<", "<<food.pos.y<<std::endl;
+     std::cout<<"New Food Pos:"<<food->pos.x<<", "<<food->pos.y<<std::endl;
      // Grow snake and increase speed.
      snake.GrowBody();
     if (rewardInEffect) {
@@ -149,7 +149,9 @@ void Game::Update() {
 
   if ((score > scoreTriggerReward) && (!isRewardValid) && (!isBombValid)){
     PlaceReward();
+    std::cout<<"New Reward Pos:"<<reward->pos.x<<", "<<reward->pos.y<<std::endl;
     PlaceBomb();
+    std::cout<<"New Bomb Pos:"<<bomb->pos.x<<", "<<bomb->pos.y<<std::endl;
     isRewardValid = true;
     isBombValid = true;
     scoreTriggerReward += rewardIncrement; //place new reward/bomb every * points
