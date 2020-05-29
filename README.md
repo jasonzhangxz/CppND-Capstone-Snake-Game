@@ -15,7 +15,13 @@ The food in the video game is extracted out as a class. And as I am putting rewa
 The other thing I learned in this project is how to use the [SDL](https://wiki.libsdl.org/Installation) library to render texture to the screen. As you can see in the video, now that you will see reward and bomb show up on the screen.
 
 ## Snake Game Code Structure
-The code structure stays about the same, other than the food is now an object of `ScreenFood`, and two new objects: `ScreenReward` and `ScreenBomb` also stored in the Game.
+The code structure changes a little bit, the food is now an object of `ScreenFood`, and adding two new objects: `ScreenReward` and `ScreenBomb`.  
+
+1) **main** creates __Controller, Game, Render and Snake__ objects, and creates **pointers** to __Food, Reward, Bomb__ objects and pass __Snake as reference__ and those __3 pointers__ to **Game**. 
+
+2) multi threads: **main** calls **Game::Run()** to start the game loop, and that is the main thread, while **Reward::run()** and **Bomb::Run()** are initiated in two separate threads.
+
+
 
 <img src="images/codeStrtructure.png"/>
 
