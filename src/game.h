@@ -12,7 +12,7 @@
 class Game {
  public:
   Game(std::size_t grid_width, std::size_t grid_height, Snake &Snake, std::unique_ptr<ScreenFood> Food,
-          ScreenReward* Reward, ScreenBomb* Bomb);
+       std::unique_ptr<ScreenReward> Reward, std::unique_ptr<ScreenBomb> Bomb);
   void Run(Controller const &controller, Renderer &renderer,
            std::size_t target_frame_duration);
   int GetScore() const;
@@ -25,8 +25,8 @@ class Game {
   void Update();
   Snake snake;
   std::unique_ptr<ScreenFood> food;
-  ScreenReward* reward;
-  ScreenBomb* bomb;
+  std::unique_ptr<ScreenReward> reward;
+  std::unique_ptr<ScreenBomb> bomb;
 
   int score{0};
   int scoreTriggerReward{3};  //when it reaches this score, it will trigger the showup of reward/bomb on scree

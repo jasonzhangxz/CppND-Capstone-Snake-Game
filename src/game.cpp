@@ -3,11 +3,11 @@
 #include "SDL.h"
 
 Game::Game(std::size_t grid_width, std::size_t grid_height, Snake &Snake, std::unique_ptr<ScreenFood> Food,
-           ScreenReward* Reward, ScreenBomb* Bomb)
+           std::unique_ptr<ScreenReward> Reward, std::unique_ptr<ScreenBomb> Bomb)
     : snake(Snake),
       food(std::move(Food)),
-      reward(Reward),
-      bomb(Bomb){
+      reward(std::move(Reward)),
+      bomb(std::move(Bomb)){
     PlaceFood();
     reward->setPos(-1,-1);//in the beginning hide the reward
     bomb->setPos(-1,-1); //in the beginning hide the bomb

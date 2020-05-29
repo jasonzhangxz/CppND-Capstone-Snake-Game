@@ -25,15 +25,15 @@ int main() {
 //  ScreenFood* food = new ScreenFood(kGridWidth, kGridHeight);
     std::unique_ptr<ScreenFood> food(new ScreenFood(kGridWidth, kGridHeight));
 
-  ScreenReward* reward = new ScreenReward(kGridWidth, kGridHeight);
-//  std::unique_ptr<ScreenReward> reward(new ScreenReward(kGridWidth, kGridHeight));
-  std::thread th1(&ScreenReward::run, reward, std::move(running1));
+//  ScreenReward* reward = new ScreenReward(kGridWidth, kGridHeight);
+  std::unique_ptr<ScreenReward> reward(new ScreenReward(kGridWidth, kGridHeight));
+  std::thread th1(&ScreenReward::run, reward.get(), std::move(running1));
 
-  ScreenBomb* bomb = new ScreenBomb(kGridWidth, kGridHeight);
-//  std::unique_ptr<ScreenBomb> bomb(new ScreenBomb(kGridWidth, kGridHeight));
-  std::thread th2(&ScreenBomb::run, bomb, std::move(running2));
+//  ScreenBomb* bomb = new ScreenBomb(kGridWidth, kGridHeight);
+  std::unique_ptr<ScreenBomb> bomb(new ScreenBomb(kGridWidth, kGridHeight));
+  std::thread th2(&ScreenBomb::run, bomb.get(), std::move(running2));
 
-  Game game(kGridWidth, kGridHeight, snake, std::move(food), reward, bomb);
+  Game game(kGridWidth, kGridHeight, snake, std::move(food), std::move(reward), std::move(bomb));
   game.Run(controller, renderer, kMsPerFrame);
 
   std::cout << "Game has terminated successfully!\n";
@@ -47,8 +47,8 @@ int main() {
   th2.join();
 
 //  delete food;
-  delete reward;
-  delete bomb;
+//  delete reward;
+//  delete bomb;
 
   return 0;
 }
