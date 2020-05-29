@@ -15,23 +15,35 @@ int main() {
   constexpr std::size_t kGridWidth{32};
   constexpr std::size_t kGridHeight{32};
 
-  std::promise<bool> exitSignal;
-  std::future<bool> running = exitSignal.get_future();
+  std::promise<bool> exitSignal1, exitSignal2, exitSignal3;
+  std::future<bool> running1 = exitSignal1.get_future();
+  std::future<bool> running2 = exitSignal2.get_future();
+  std::future<bool> running3 = exitSignal3.get_future();
 
   Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
   Controller controller;
   Snake snake(kGridWidth, kGridHeight);
   ScreenFood food(kGridWidth, kGridHeight);
-  std::thread th1(&ScreenFood::run, &food, std::move(running));
+  std::thread th1(&ScreenFood::run, &food, std::move(running1));
 
-  Game game(kGridWidth, kGridHeight, snake, food);
+  ScreenReward reward(kGridWidth, kGridHeight);
+  std::thread th2(&ScreenReward::run, &reward, std::move(running2));
+
+  ScreenBomb bomb(kGridWidth, kGridHeight);
+  std::thread th3(&ScreenBomb::run, &bomb, std::move(running3));
+
+  Game game(kGridWidth, kGridHeight, snake, food, reward, bomb);
   game.Run(controller, renderer, kMsPerFrame);
 
   std::cout << "Game has terminated successfully!\n";
   std::cout << "Score: " << game.GetScore() << "\n";
   std::cout << "Size: " << game.GetSize() << "\n";
 
-  exitSignal.set_value(std::move(snake.alive));
+  exitSignal1.set_value((snake.alive));
+  exitSignal2.set_value((snake.alive));
+  exitSignal3.set_value((snake.alive));
   th1.join();
+  th2.join();
+  th3.join();
   return 0;
 }

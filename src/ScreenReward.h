@@ -3,6 +3,7 @@
 #define SCREENREWARD_H
 
 #include <chrono>
+#include <future>
 #include "ScreenObject.h"
 #include "SDL.h"
 
@@ -11,7 +12,7 @@ public:
   ScreenReward(std::size_t grid_width, std::size_t grid_height);
   void updatePos();
   int getTimeLeft();
-  void run();
+  void run(std::future<bool> running);
 
 protected:
   std::chrono::system_clock::time_point tStart,tNow;

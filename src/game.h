@@ -11,7 +11,8 @@
 
 class Game {
  public:
-  Game(std::size_t grid_width, std::size_t grid_height, Snake &Snake, ScreenFood &Food);
+  Game(std::size_t grid_width, std::size_t grid_height, Snake &Snake, ScreenFood &Food,
+          ScreenReward &Reward, ScreenBomb &Bomb);
   void Run(Controller const &controller, Renderer &renderer,
            std::size_t target_frame_duration);
   int GetScore() const;

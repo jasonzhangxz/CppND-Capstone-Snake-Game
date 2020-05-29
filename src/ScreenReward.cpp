@@ -19,10 +19,11 @@ void ScreenReward::updatePos(){
   std::uniform_int_distribution<int> dist{onScreenTimeLowBound, onScreenTimeHighBound};
   expectDuration = dist(engine);
   timeLeft = expectDuration;
+  std::cout<<"Reward updatePos() ExpectDuration "<<expectDuration<<" ;timeLeft: "<<timeLeft<<std::endl;
 }
 
 void ScreenReward::checkDuration(){
-  while(true){
+//  while(true){
     tNow = std::chrono::system_clock::now();
     auto elapse = std::chrono::duration_cast<std::chrono::seconds>( tNow - tStart ).count();
     timeLeft = expectDuration - elapse;
@@ -30,13 +31,20 @@ void ScreenReward::checkDuration(){
       setPos(-1,-1);//hide the Object from the screen
       timeLeft = 0;
     }
-    // sleep for 500ms between two cycles
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
-  }
+
+//  }
 }
 
-void ScreenReward::run()
+void ScreenReward::run(std::future<bool> running)
 {
     // launch reward function in a thread
-    checkDuration();
+    std::cout << "Reward Thread Start" << std::endl;
+    while (running.wait_for(std::chrono::milliseconds(1)) == std::future_status::timeout){
+        checkDuration();
+        std::cout<<"Reward ExpectDuration "<<expectDuration<<" ;timeLeft: "<<timeLeft<<std::endl;
+
+        // sleep for 500ms between two cycles
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    }
+    std::cout << "Reward Thread End" << std::endl;
 }

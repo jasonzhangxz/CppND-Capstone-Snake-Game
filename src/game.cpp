@@ -2,16 +2,15 @@
 #include <iostream>
 #include "SDL.h"
 
-Game::Game(std::size_t grid_width, std::size_t grid_height, Snake &Snake, ScreenFood &Food)
-    : reward(grid_width, grid_height),
-      bomb(grid_width, grid_height),
-      snake(Snake),
-      food(Food){
-   PlaceFood();
-  reward.setPos(-1,-1);//in the beginning hide the reward
-//  reward.run();
-  bomb.setPos(-1,-1); //in the beginning hide the bomb	  bomb.setPos(-1,-1); //in the beginning hide the bomb
-//  bomb.run();
+Game::Game(std::size_t grid_width, std::size_t grid_height, Snake &Snake, ScreenFood &Food,
+           ScreenReward &Reward, ScreenBomb &Bomb)
+    : snake(Snake),
+      food(Food),
+      reward(Reward),
+      bomb(Bomb){
+    PlaceFood();
+    reward.setPos(-1,-1);//in the beginning hide the reward
+    bomb.setPos(-1,-1); //in the beginning hide the bomb
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,

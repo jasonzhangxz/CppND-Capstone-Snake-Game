@@ -19,11 +19,11 @@ void ScreenFood::updatePos(){
 
 void ScreenFood::run(std::future<bool> running){
   // launch Food function in a thread
-  std::cout << "Thread Start" << std::endl;
+  std::cout << "Food Thread Start" << std::endl;
   while (running.wait_for(std::chrono::milliseconds(1)) == std::future_status::timeout){
     placeFood();
   }
-  std::cout << "Thread End" << std::endl;
+  std::cout << "Food Thread End" << std::endl;
 }
 
 void ScreenFood::placeFood(){
@@ -46,7 +46,8 @@ void ScreenFood::placeFood(){
 //    }
 
     // sleep for 2ms between two cycles
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+//    std::cout<<"Food thread running"<<std::endl;
 
 //  }
 }
