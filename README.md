@@ -29,8 +29,11 @@ After the extension, it looks like something below. A video can be found [here](
 3. Classes follow an appropriate inheritance hierarchy. As you can see in the class hierarchy diagram.
 4. Derived class functions override virtual base class functions. The [`ScreenFood::updatePos()`](./src/ScreenFood.cpp#L10) override the virtual base class function [`virtual void updatePos()`](./src/ScreenObject.h#L33).
 5. The project makes use of references in function declarations. Here is an example of passing [`reward`](./src/ScreenBomb.h#L11) as a reference. Another example is to pass the snake, food, reward, bomb objects to [`Render()`](./src/renderer.h#L14) as references instead of copies to save a lot of memory allocation.
-
-
+6. This project makes use of [`threads`](./src/main.cpp#L30), and make them *.[`join()`](./src/main.cpp#L46)at the end of the main.
+7. This project uses single objects in multiple threads by using [`pointer`](./src/main.cpp#L28) [(reference)](https://stackoverflow.com/questions/28741921/how-to-use-a-single-object-in-multiple-threads), as reward and bomb run in both the main thread and their separate threads
+8. This project investigated in [`how to stop/terminate a thread from the main thread`](https://thispointer.com/c11-how-to-stop-or-terminate-a-thread/) by using promise and future, both [`reward`](./src/ScreenReward.cpp#L35) and [`bomb`](./src/ScreenBomb.cpp#L30) threads terminate when the snake is dead.
+9. This project uses smart pointer - [`unique_ptr`](./src/main.cpp#L29) and uses [`move semantics`](./src/main.cpp#L36)
+10. This project [`brings the food/reward/bomb into the game class using pointer `](./src/game.h#L15) and [`brings snake as reference into the game class`](./src/game.h#L14) instead of create those instances inside the game class. 
 
 ## Dependencies for Running Locally
 * cmake >= 3.11
