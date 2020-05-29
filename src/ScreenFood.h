@@ -12,10 +12,9 @@ public:
   ScreenFood(const ScreenFood &food);
 
   void updatePos();
-  void run(std::future<bool> running);
+  void run();
 
 private:
-  void placeFood();
 
 };
 

@@ -17,37 +17,7 @@ void ScreenFood::updatePos(){
   pos.y = random_h(engine);
 }
 
-void ScreenFood::run(std::future<bool> running){
-  // launch Food function in a thread
-  std::cout << "Food Thread Start" << std::endl;
-  while (running.wait_for(std::chrono::milliseconds(1)) == std::future_status::timeout){
-    placeFood();
-  }
-  std::cout << "Food Thread End" << std::endl;
-}
-
-void ScreenFood::placeFood(){
-//  while (snake_.alive) {
-//    while (true) {
-    // Check that the location is not occupied by a snake item before placing
-    // food.
-//    if (snake_.SnakeCell(pos.x, pos.y)) {
-//      updatePos();
-//    }
-//
-//    snake_.Update();
-//    int new_x = static_cast<int>(snake_.head_x);
-//    int new_y = static_cast<int>(snake_.head_y);
-//
-//    // Check if there's food over here
-//    if (pos.x == new_x && pos.y == new_y) {
-//      snake_.GrowBody();
-//      updatePos();
-//    }
-
-    // sleep for 2ms between two cycles
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-//    std::cout<<"Food thread running"<<std::endl;
-
-//  }
+void ScreenFood::run(){
+  //empty function only print out a comment
+  std::cout << "run food" << std::endl;
 }

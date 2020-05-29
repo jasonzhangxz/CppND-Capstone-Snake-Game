@@ -15,22 +15,20 @@ int main() {
   constexpr std::size_t kGridWidth{32};
   constexpr std::size_t kGridHeight{32};
 
-  std::promise<bool> exitSignal1, exitSignal2, exitSignal3;
+  std::promise<bool> exitSignal1, exitSignal2;
   std::future<bool> running1 = exitSignal1.get_future();
   std::future<bool> running2 = exitSignal2.get_future();
-  std::future<bool> running3 = exitSignal3.get_future();
 
   Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
   Controller controller;
   Snake snake(kGridWidth, kGridHeight);
   ScreenFood* food = new ScreenFood(kGridWidth, kGridHeight);
-  std::thread th1(&ScreenFood::run, food, std::move(running1));
 
   ScreenReward* reward = new ScreenReward(kGridWidth, kGridHeight);
-  std::thread th2(&ScreenReward::run, reward, std::move(running2));
+  std::thread th1(&ScreenReward::run, reward, std::move(running1));
 
   ScreenBomb* bomb = new ScreenBomb(kGridWidth, kGridHeight);
-  std::thread th3(&ScreenBomb::run, bomb, std::move(running3));
+  std::thread th2(&ScreenBomb::run, bomb, std::move(running2));
 
   Game game(kGridWidth, kGridHeight, snake, food, reward, bomb);
   game.Run(controller, renderer, kMsPerFrame);
@@ -41,11 +39,9 @@ int main() {
 
   exitSignal1.set_value((snake.alive));
   exitSignal2.set_value((snake.alive));
-  exitSignal3.set_value((snake.alive));
 
   th1.join();
   th2.join();
-  th3.join();
 
   delete food;
   delete reward;
