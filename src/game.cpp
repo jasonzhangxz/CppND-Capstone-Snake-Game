@@ -3,14 +3,14 @@
 #include "SDL.h"
 
 Game::Game(std::size_t grid_width, std::size_t grid_height, Snake &Snake, ScreenFood &Food,
-           ScreenReward* Reward, ScreenBomb &Bomb)
+           ScreenReward* Reward, ScreenBomb* Bomb)
     : snake(Snake),
       food(Food),
       reward(Reward),
       bomb(Bomb){
     PlaceFood();
     reward->setPos(-1,-1);//in the beginning hide the reward
-    bomb.setPos(-1,-1); //in the beginning hide the bomb
+    bomb->setPos(-1,-1); //in the beginning hide the bomb
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
@@ -28,7 +28,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, snake);
     Update();
-    renderer.Render(snake, food.pos, reward->pos, bomb.pos);
+    renderer.Render(snake, food.pos, reward->pos, bomb->pos);
 
     frame_end = SDL_GetTicks();
 
@@ -80,12 +80,12 @@ void Game::PlaceReward() {
 }
 
 void Game::PlaceBomb() {
-  bomb.updatePos(*reward);//the bomb is going to be around the reward
+  bomb->updatePos(*reward);//the bomb is going to be around the reward
   while (true) {
     // Check that the location is not occupied by a snake item before placing
     // bomb.
-    if (snake.SnakeCell(bomb.pos.x, bomb.pos.y)) {
-      bomb.updatePos(*reward);
+    if (snake.SnakeCell(bomb->pos.x, bomb->pos.y)) {
+      bomb->updatePos(*reward);
     } else {
       return;
     }
@@ -140,9 +140,9 @@ void Game::Update() {
 
   if (isBombValid) {
     // std::cout<<"Bomb Screen time left: "<<bomb.getTimeLeft()<<std::endl;
-    bombTimeLeft = bomb.getTimeLeft();
+    bombTimeLeft = bomb->getTimeLeft();
     isBombValid = (bombTimeLeft > 0 ? true : false);
-    if (bomb.pos.x == new_x && bomb.pos.y == new_y) {
+    if (bomb->pos.x == new_x && bomb->pos.y == new_y) {
       snake.alive = false;
     }
   }

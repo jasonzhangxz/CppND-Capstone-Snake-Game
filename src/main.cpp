@@ -29,8 +29,8 @@ int main() {
   ScreenReward* reward = new ScreenReward(kGridWidth, kGridHeight);
   std::thread th2(&ScreenReward::run, reward, std::move(running2));
 
-  ScreenBomb bomb(kGridWidth, kGridHeight);
-  std::thread th3(&ScreenBomb::run, &bomb, std::move(running3));
+  ScreenBomb* bomb = new ScreenBomb(kGridWidth, kGridHeight);
+  std::thread th3(&ScreenBomb::run, bomb, std::move(running3));
 
   Game game(kGridWidth, kGridHeight, snake, food, reward, bomb);
   game.Run(controller, renderer, kMsPerFrame);
