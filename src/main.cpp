@@ -45,5 +45,7 @@ int main() {
   th1.join();
   th2.join();
   th3.join();
+  delete reward;
+  delete bomb;
   return 0;
 }
