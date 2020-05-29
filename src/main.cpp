@@ -26,8 +26,8 @@ int main() {
   ScreenFood food(kGridWidth, kGridHeight);
   std::thread th1(&ScreenFood::run, &food, std::move(running1));
 
-  ScreenReward reward(kGridWidth, kGridHeight);
-  std::thread th2(&ScreenReward::run, &reward, std::move(running2));
+  ScreenReward* reward = new ScreenReward(kGridWidth, kGridHeight);
+  std::thread th2(&ScreenReward::run, reward, std::move(running2));
 
   ScreenBomb bomb(kGridWidth, kGridHeight);
   std::thread th3(&ScreenBomb::run, &bomb, std::move(running3));

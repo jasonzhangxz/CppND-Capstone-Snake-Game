@@ -12,7 +12,7 @@
 class Game {
  public:
   Game(std::size_t grid_width, std::size_t grid_height, Snake &Snake, ScreenFood &Food,
-          ScreenReward &Reward, ScreenBomb &Bomb);
+          ScreenReward* Reward, ScreenBomb &Bomb);
   void Run(Controller const &controller, Renderer &renderer,
            std::size_t target_frame_duration);
   int GetScore() const;
@@ -25,7 +25,7 @@ class Game {
   void Update();
   Snake snake;
   ScreenFood food;
-  ScreenReward reward;
+  ScreenReward* reward;
   ScreenBomb bomb;
 
   int score{0};
